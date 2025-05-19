@@ -3,10 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
-import { ShoppingCart, User, LogOut, Menu } from 'lucide-react';
+import { ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Separator } from '@/components/ui/separator';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -18,37 +17,28 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="bg-bakery-cream shadow-md">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      {/* Спрощений заголовок */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <img 
-              src="/placeholder.svg" 
-              alt="Логотип пекарні" 
-              className="h-10 w-10 rounded-full bg-bakery-brown"
-            />
-            <h1 className="text-2xl font-bold text-bakery-brown">Хлібна Майстерня</h1>
+            <h1 className="text-xl font-bold text-primary">Замовлення продукції</h1>
           </Link>
           
-          {/* Mobile menu */}
+          {/* Мобільне меню */}
           <div className="block md:hidden">
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6" />
+                  <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
               <SheetContent>
                 <div className="flex flex-col gap-4 mt-8">
                   {user ? (
                     <>
-                      <div className="flex items-center gap-2 mb-2">
-                        <User className="h-5 w-5" />
-                        <span>
-                          {user.firstName} {user.lastName}
-                        </span>
+                      <div className="mb-4 text-sm">
+                        Користувач: <span className="font-medium">{user.firstName} {user.lastName}</span>
                       </div>
-                      <Separator />
                       <Link to="/products" className="px-4 py-2 hover:bg-secondary rounded-md">
                         Каталог продукції
                       </Link>
@@ -66,11 +56,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                         </Link>
                       )}
                       <Button 
-                        variant="destructive" 
+                        variant="outline" 
                         onClick={logout}
-                        className="flex items-center gap-2"
+                        className="mt-2"
                       >
-                        <LogOut className="h-5 w-5" />
                         Вихід
                       </Button>
                     </>
@@ -89,22 +78,19 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </Sheet>
           </div>
           
-          {/* Desktop menu */}
+          {/* Десктопне меню */}
           <div className="hidden md:flex items-center gap-4">
             {user ? (
               <>
-                <div className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
-                  <span>
-                    {user.firstName} {user.lastName}
-                  </span>
-                </div>
+                <span className="text-sm">
+                  {user.firstName} {user.lastName}
+                </span>
                 <Link to="/products">
-                  <Button variant="ghost">Каталог</Button>
+                  <Button variant="ghost" size="sm">Каталог</Button>
                 </Link>
                 <Link to="/cart">
-                  <Button variant="ghost" className="relative">
-                    <ShoppingCart className="h-5 w-5" />
+                  <Button variant="ghost" size="sm" className="relative">
+                    <ShoppingCart className="h-4 w-4" />
                     {itemCount > 0 && (
                       <span className="absolute -top-1 -right-1 bg-primary text-white px-1.5 py-0.5 rounded-full text-xs">
                         {itemCount}
@@ -114,25 +100,24 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 </Link>
                 {user.isAdmin && (
                   <Link to="/admin">
-                    <Button variant="outline">Адмін панель</Button>
+                    <Button variant="outline" size="sm">Адмін</Button>
                   </Link>
                 )}
                 <Button 
-                  variant="destructive" 
+                  variant="outline" 
+                  size="sm"
                   onClick={logout}
-                  className="flex items-center gap-2"
                 >
-                  <LogOut className="h-5 w-5" />
                   Вихід
                 </Button>
               </>
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outline">Вхід</Button>
+                  <Button variant="outline" size="sm">Вхід</Button>
                 </Link>
                 <Link to="/register">
-                  <Button>Реєстрація</Button>
+                  <Button size="sm">Реєстрація</Button>
                 </Link>
               </>
             )}
@@ -140,34 +125,15 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </div>
       </header>
       
-      {/* Main content */}
+      {/* Основний контент */}
       <main className="flex-1 container mx-auto px-4 py-6">
         {children}
       </main>
       
-      {/* Footer */}
-      <footer className="bg-bakery-brown text-white py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Хлібна Майстерня</h3>
-              <p>Найсвіжіша хлібна продукція для вас та вашої родини.</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4">Контакти</h3>
-              <p>Телефон: +380 00 000 0000</p>
-              <p>Email: info@bakery.com</p>
-              <p>Адреса: вул. Затишна, 123, м. Київ</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4">Години роботи</h3>
-              <p>Пн-Пт: 7:00 - 20:00</p>
-              <p>Сб-Нд: 8:00 - 18:00</p>
-            </div>
-          </div>
-          <div className="mt-8 text-center text-sm">
-            <p>© 2025 Хлібна Майстерня. Всі права захищені.</p>
-          </div>
+      {/* Спрощений футер */}
+      <footer className="bg-gray-100 py-4 border-t border-gray-200">
+        <div className="container mx-auto px-4 text-center text-sm text-gray-600">
+          <p>© 2025 Замовлення продукції</p>
         </div>
       </footer>
     </div>

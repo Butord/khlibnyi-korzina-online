@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,10 +28,10 @@ const LoginForm = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!loginPhone.trim() || !loginFirstName.trim() || !loginLastName.trim()) {
+    if (!loginPhone.trim()) {
       toast({
         title: "Помилка",
-        description: "Всі поля обов'язкові для заповнення",
+        description: "Номер телефону обов'язковий для заповнення",
         variant: "destructive"
       });
       return;
@@ -41,6 +40,7 @@ const LoginForm = () => {
     setIsLoginSubmitting(true);
     
     try {
+      // Тепер ми передаємо телефон як обов'язковий, а ім'я та прізвище як опціональні
       const success = await login(loginPhone, loginFirstName, loginLastName);
       
       if (success) {
@@ -112,7 +112,7 @@ const LoginForm = () => {
     <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab} className="w-full">
       <TabsList className="grid grid-cols-2 mb-6">
         <TabsTrigger value="login">Вхід</TabsTrigger>
-        <TabsTrigger value="register">Реєстрація</TabsTrigger>
+        <TabsTrigger value="register">Реєстра��ія</TabsTrigger>
       </TabsList>
       
       <TabsContent value="login">
@@ -137,7 +137,6 @@ const LoginForm = () => {
               onChange={(e) => setLoginFirstName(e.target.value)}
               placeholder="Введіть ім'я"
               disabled={isLoginSubmitting}
-              required
             />
           </div>
           
@@ -149,7 +148,6 @@ const LoginForm = () => {
               onChange={(e) => setLoginLastName(e.target.value)}
               placeholder="Введіть прізвище"
               disabled={isLoginSubmitting}
-              required
             />
           </div>
           

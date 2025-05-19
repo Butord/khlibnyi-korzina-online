@@ -1,10 +1,11 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User } from '../types';
+import { getUserByPhone } from '../services/userService';
 
 interface AuthContextType {
   user: User | null;
-  login: (phone: string, firstName: string, lastName: string) => Promise<boolean>;
+  login: (phone: string, firstName?: string, lastName?: string) => Promise<boolean>;
   logout: () => void;
   register: (firstName: string, lastName: string, phone: string) => Promise<boolean>;
   isLoading: boolean;
@@ -45,15 +46,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
-  const login = async (phone: string, firstName: string, lastName: string): Promise<boolean> => {
+  const login = async (phone: string, firstName?: string, lastName?: string): Promise<boolean> => {
     setIsLoading(true);
     
     // Simulate API call
     return new Promise((resolve) => {
-      setTimeout(() => {
-        const foundUser = MOCK_USERS.find(
-          (u) => u.phone === phone
-        );
+      setTimeout(async () => {
+        // Спочатку перевіряємо користувача по телефону
+        const foundUser = await getUserByPhone(phone);
         
         if (foundUser) {
           if (!foundUser.isApproved) {
@@ -64,6 +64,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
           setUser(foundUser);
           localStorage.setItem('bakeryUser', JSON.stringify(foundUser));
+          setIsLoading(false);
+          resolve(true);
+          return;
+        }
+        
+        // Якщо користувача не знайдено за телефоном, перевіряємо по старому методу
+        const legacyUser = MOCK_USERS.find(
+          (u) => u.phone === phone && u.firstName === firstName && u.lastName === lastName
+        );
+        
+        if (legacyUser) {
+          if (!legacyUser.isApproved) {
+            setIsLoading(false);
+            resolve(false);
+            return;
+          }
+          
+          setUser(legacyUser);
+          localStorage.setItem('bakeryUser', JSON.stringify(legacyUser));
           setIsLoading(false);
           resolve(true);
           return;

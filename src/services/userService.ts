@@ -48,6 +48,16 @@ export const getUserById = async (id: number): Promise<User | null> => {
   });
 };
 
+export const getUserByPhone = async (phone: string): Promise<User | null> => {
+  // Simulate API call
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const user = MOCK_USERS.find((user) => user.phone === phone) || null;
+      resolve(user ? { ...user } : null);
+    }, 300);
+  });
+};
+
 export const approveUser = async (id: number): Promise<boolean> => {
   // Simulate API call
   return new Promise((resolve) => {
@@ -104,3 +114,4 @@ export const saveUser = async (user: User): Promise<User> => {
     }, 500);
   });
 };
+

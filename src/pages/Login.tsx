@@ -91,7 +91,6 @@ const Login: React.FC = () => {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   disabled={isSubmitting}
-                  required
                 />
               </div>
               
@@ -103,7 +102,6 @@ const Login: React.FC = () => {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   disabled={isSubmitting}
-                  required
                 />
               </div>
             </CardContent>

@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
-import { ShoppingCart, Menu, Facebook, Instagram, Youtube } from 'lucide-react';
+import { ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
@@ -18,11 +18,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-4 py-5">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
             {/* Mobile Menu */}
-            <div className="block lg:hidden self-start">
+            <div className="block lg:hidden">
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon">
@@ -78,80 +78,54 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               </Sheet>
             </div>
 
-            {/* Main Navigation - Left Side */}
-            <div className="hidden lg:flex items-center gap-8 text-foreground">
-              <Link to="/" className="font-medium hover:text-primary transition-colors">
-                ПРО НАС
-              </Link>
-              <Link to="/products" className="font-medium hover:text-primary transition-colors">
-                ПРОДУКТИ
-              </Link>
-              <Link to="#" className="font-medium hover:text-primary transition-colors">
-                ДЕ ПРИДБАТИ
-              </Link>
+            {/* Logo */}
+            <div>
+              <Link to="/" className="font-bold text-xl">Хлібна</Link>
             </div>
 
-            {/* Logo - Center */}
-            <div className="my-4 lg:my-0">
-              <Link to="/" className="flex items-center gap-2">
-                <div className="bg-primary text-white h-16 w-16 rounded-full flex items-center justify-center">
-                  <span className="text-xl font-bold">Хліб</span>
-                </div>
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-6">
+              <Link to="/" className="hover:text-primary transition-colors">
+                Головна
               </Link>
-            </div>
-
-            {/* Right Side Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
-              <Link to="#" className="font-medium hover:text-primary transition-colors">
-                НОВИНИ
+              <Link to="/products" className="hover:text-primary transition-colors">
+                Продукти
               </Link>
-              <Link to="#" className="font-medium hover:text-primary transition-colors">
-                КОНТАКТИ
+              <Link to="#" className="hover:text-primary transition-colors">
+                Контакти
               </Link>
               
-              <div className="flex items-center gap-3">
-                <a href="#" className="text-foreground hover:text-primary transition-colors">
-                  <Youtube size={20} />
-                </a>
-                <a href="#" className="text-foreground hover:text-primary transition-colors">
-                  <Facebook size={20} />
-                </a>
-                <a href="#" className="text-foreground hover:text-primary transition-colors">
-                  <Instagram size={20} />
-                </a>
-
-                {/* User Menu and Cart */}
-                {user ? (
-                  <div className="flex items-center gap-3 ml-4">
-                    <Link to="/cart">
-                      <Button variant="ghost" size="icon" className="relative">
-                        <ShoppingCart className="h-5 w-5" />
-                        {itemCount > 0 && (
-                          <span className="absolute -top-1 -right-1 bg-primary text-white px-1.5 py-0.5 rounded-full text-xs">
-                            {itemCount}
-                          </span>
-                        )}
-                      </Button>
-                    </Link>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={logout}
-                    >
-                      Вихід
+              {/* User Menu and Cart */}
+              {user ? (
+                <div className="flex items-center gap-3 ml-4">
+                  <Link to="/cart">
+                    <Button variant="ghost" size="icon" className="relative">
+                      <ShoppingCart className="h-5 w-5" />
+                      {itemCount > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-primary text-white px-1.5 py-0.5 rounded-full text-xs">
+                          {itemCount}
+                        </span>
+                      )}
                     </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-3 ml-4">
-                    <Link to="/login">
-                      <Button variant="outline" size="sm">Вхід</Button>
-                    </Link>
-                    <Link to="/register">
-                      <Button size="sm">Реєстрація</Button>
-                    </Link>
-                  </div>
-                )}
-              </div>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={logout}
+                  >
+                    Вихід
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 ml-4">
+                  <Link to="/login">
+                    <Button variant="outline" size="sm">Вхід</Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button size="sm">Реєстрація</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -163,35 +137,22 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </main>
       
       {/* Footer */}
-      <footer className="bg-secondary py-8 border-t border-gray-200">
+      <footer className="bg-secondary py-6 border-t border-gray-200">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <h3 className="text-lg font-bold mb-4">Контакти</h3>
-              <p className="mb-2">Телефон: +380 12 345 6789</p>
-              <p>Email: info@bakery.ua</p>
+              <h3 className="text-base font-bold mb-2">Контакти</h3>
+              <p className="text-sm">Телефон: +380 12 345 6789</p>
+              <p className="text-sm">Email: info@bakery.ua</p>
             </div>
             <div>
-              <h3 className="text-lg font-bold mb-4">Адреса</h3>
-              <p>вул. Хлібна, 123<br />м. Київ, 01001<br />Україна</p>
+              <h3 className="text-base font-bold mb-2">Адреса</h3>
+              <p className="text-sm">вул. Хлібна, 123, м. Київ, 01001, Україна</p>
             </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Соціальні мережі</h3>
-              <div className="flex gap-4">
-                <a href="#" className="text-foreground hover:text-primary transition-colors">
-                  <Youtube size={24} />
-                </a>
-                <a href="#" className="text-foreground hover:text-primary transition-colors">
-                  <Facebook size={24} />
-                </a>
-                <a href="#" className="text-foreground hover:text-primary transition-colors">
-                  <Instagram size={24} />
-                </a>
-              </div>
+            <div className="text-center md:text-right">
+              <p className="text-sm">© 2025 Хлібобулочні вироби</p>
+              <p className="text-sm">Усі права захищено</p>
             </div>
-          </div>
-          <div className="mt-8 pt-6 border-t border-gray-300 text-center">
-            <p>© 2025 Хлібобулочні вироби. Усі права захищено.</p>
           </div>
         </div>
       </footer>

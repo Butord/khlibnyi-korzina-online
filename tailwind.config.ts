@@ -15,7 +15,7 @@ export default {
 			center: true,
 			padding: '2rem',
 			screens: {
-				'2xl': '1400px'
+				'2xl': '1200px'
 			}
 		},
 		extend: {
@@ -64,12 +64,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				bakery: {
-					'brown': '#8B4513',
-					'light-brown': '#A0522D',
-					'cream': '#FFF8DC',
-					'light-cream': '#FFFAF0',
-					'gold': '#DAA520',
-					'orange': '#F26F21'
+					'brown': '#A87D57',
+					'light-brown': '#C9A887',
+					'cream': '#F9F5F0',
+					'light-cream': '#FFF9F0',
+					'gold': '#D4B483'
 				}
 			},
 			borderRadius: {

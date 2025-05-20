@@ -6,43 +6,43 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 30 25% 25%;
+    --foreground: 0 0% 20%;
 
     --card: 0 0% 98%;
-    --card-foreground: 30 25% 25%;
+    --card-foreground: 0 0% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 25% 25%;
+    --popover-foreground: 0 0% 20%;
 
-    --primary: 24 100% 50%;
+    --primary: 30 80% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 30 30% 96%;
-    --secondary-foreground: 24 100% 50%;
+    --secondary: 30 30% 95%;
+    --secondary-foreground: 30 80% 55%;
 
-    --muted: 30 10% 92%;
-    --muted-foreground: 30 10% 40%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
 
     --accent: 30 20% 90%;
-    --accent-foreground: 24 100% 50%;
+    --accent-foreground: 30 80% 55%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 15% 90%;
-    --input: 30 15% 90%;
-    --ring: 24 100% 50%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 30 80% 55%;
 
-    --radius: 0.5rem;
+    --radius: 0.4rem;
     
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 30 25% 25%;
-    --sidebar-primary: 24 100% 50%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 30 80% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 30 20% 90%;
-    --sidebar-accent-foreground: 24 100% 50%;
-    --sidebar-border: 30 15% 90%;
-    --sidebar-ring: 24 100% 50%;
+    --sidebar-accent-foreground: 30 80% 55%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 30 80% 55%;
   }
 }
 
@@ -57,14 +57,14 @@
   }
 
   .stat-number {
-    @apply text-primary text-7xl font-bold;
+    @apply text-primary text-5xl font-bold;
   }
   
   .stat-text {
-    @apply text-foreground text-lg;
+    @apply text-foreground text-base;
   }
   
   .bakery-button {
-    @apply bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full text-lg font-medium transition-colors;
+    @apply bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-md text-base font-medium transition-colors;
   }
 }

@@ -64,11 +64,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				bakery: {
-					'brown': '#A87D57',
-					'light-brown': '#C9A887',
-					'cream': '#F9F5F0',
-					'light-cream': '#FFF9F0',
-					'gold': '#D4B483'
+					'brown': '#C87941',
+					'light-brown': '#E6A86C',
+					'cream': '#FFF2E2',
+					'light-cream': '#FFF8F0',
+					'gold': '#F5BB5C'
 				}
 			},
 			borderRadius: {

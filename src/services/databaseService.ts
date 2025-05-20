@@ -1,4 +1,3 @@
-
 import { DATABASE_CONFIG, USE_MOCK_DATA } from "../config/database";
 import { User, Product, Order } from "../types";
 import { MOCK_USERS } from "./userService";

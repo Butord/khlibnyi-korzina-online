@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [activeTab, setActiveTab] = useState<string>("login");
@@ -38,9 +39,9 @@ const LoginForm = () => {
     }
     
     setIsLoginSubmitting(true);
+    console.log("Trying to login with:", { loginPhone, loginFirstName, loginLastName });
     
     try {
-      // Тепер ми передаємо телефон як обов'язковий, а ім'я та прізвище як опціональні
       const success = await login(loginPhone, loginFirstName, loginLastName);
       
       if (success) {
@@ -57,6 +58,7 @@ const LoginForm = () => {
         });
       }
     } catch (error) {
+      console.error("Login error:", error);
       toast({
         title: "Помилка",
         description: "Виникла помилка під час входу",
@@ -112,7 +114,7 @@ const LoginForm = () => {
     <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab} className="w-full">
       <TabsList className="grid grid-cols-2 mb-6">
         <TabsTrigger value="login">Вхід</TabsTrigger>
-        <TabsTrigger value="register">Реєстра��ія</TabsTrigger>
+        <TabsTrigger value="register">Реєстрація</TabsTrigger>
       </TabsList>
       
       <TabsContent value="login">

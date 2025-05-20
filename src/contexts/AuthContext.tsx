@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User } from '../types';
 import { getUserByPhone } from '../services/userService';
@@ -10,26 +9,6 @@ interface AuthContextType {
   register: (firstName: string, lastName: string, phone: string) => Promise<boolean>;
   isLoading: boolean;
 }
-
-// Mock user data (in a real app, this would come from a database)
-const MOCK_USERS: User[] = [
-  {
-    id: 1,
-    firstName: 'Admin',
-    lastName: 'User',
-    phone: '1234567890',
-    isApproved: true,
-    isAdmin: true
-  },
-  {
-    id: 2,
-    firstName: 'Test',
-    lastName: 'Customer',
-    phone: '0987654321',
-    isApproved: true,
-    isAdmin: false
-  }
-];
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -48,50 +27,56 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (phone: string, firstName?: string, lastName?: string): Promise<boolean> => {
     setIsLoading(true);
+    console.log("Login attempt with:", { phone, firstName, lastName });
     
-    // Simulate API call
-    return new Promise((resolve) => {
-      setTimeout(async () => {
-        // Спочатку перевіряємо користувача по телефону
-        const foundUser = await getUserByPhone(phone);
+    try {
+      // Спробуємо знайти користувача лише за номером телефону
+      const foundUser = await getUserByPhone(phone);
+      
+      if (foundUser) {
+        console.log("Found user by phone:", foundUser);
         
-        if (foundUser) {
-          if (!foundUser.isApproved) {
-            setIsLoading(false);
-            resolve(false);
-            return;
-          }
-          
-          setUser(foundUser);
-          localStorage.setItem('bakeryUser', JSON.stringify(foundUser));
+        if (!foundUser.isApproved) {
+          console.log("User is not approved");
           setIsLoading(false);
-          resolve(true);
-          return;
+          return false;
         }
         
-        // Якщо користувача не знайдено за телефоном, перевіряємо по старому методу
-        const legacyUser = MOCK_USERS.find(
-          (u) => u.phone === phone && u.firstName === firstName && u.lastName === lastName
-        );
-        
-        if (legacyUser) {
-          if (!legacyUser.isApproved) {
-            setIsLoading(false);
-            resolve(false);
-            return;
-          }
-          
-          setUser(legacyUser);
-          localStorage.setItem('bakeryUser', JSON.stringify(legacyUser));
-          setIsLoading(false);
-          resolve(true);
-          return;
-        }
-        
+        setUser(foundUser);
+        localStorage.setItem('bakeryUser', JSON.stringify(foundUser));
         setIsLoading(false);
-        resolve(false);
-      }, 1000);
-    });
+        return true;
+      }
+      
+      // Якщо не знайдено за телефоном, перевіряємо додатково ім'я та прізвище
+      if (firstName && lastName) {
+        // Спочатку перевіримо адміністратора (особливий випадок)
+        if (phone === '1234567890' && firstName === 'Admin' && lastName === 'User') {
+          const adminUser = {
+            id: 1,
+            firstName: 'Admin',
+            lastName: 'User',
+            phone: '1234567890',
+            isApproved: true,
+            isAdmin: true
+          };
+          
+          console.log("Admin login successful");
+          setUser(adminUser);
+          localStorage.setItem('bakeryUser', JSON.stringify(adminUser));
+          setIsLoading(false);
+          return true;
+        }
+      }
+      
+      console.log("Login failed - user not found");
+      setIsLoading(false);
+      return false;
+    } catch (error) {
+      console.error("Login error:", error);
+      setIsLoading(false);
+      return false;
+    }
   };
 
   const register = async (firstName: string, lastName: string, phone: string): Promise<boolean> => {

@@ -1,4 +1,3 @@
-
 import { User } from "../types";
 
 // Mock user data (in a real app, this would come from an API)
@@ -49,10 +48,12 @@ export const getUserById = async (id: number): Promise<User | null> => {
 };
 
 export const getUserByPhone = async (phone: string): Promise<User | null> => {
+  console.log("Looking for user with phone:", phone);
   // Simulate API call
   return new Promise((resolve) => {
     setTimeout(() => {
       const user = MOCK_USERS.find((user) => user.phone === phone) || null;
+      console.log("Found user:", user);
       resolve(user ? { ...user } : null);
     }, 300);
   });
@@ -114,4 +115,3 @@ export const saveUser = async (user: User): Promise<User> => {
     }, 500);
   });
 };
-

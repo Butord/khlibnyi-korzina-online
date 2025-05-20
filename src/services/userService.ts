@@ -1,7 +1,8 @@
+
 import { User } from "../types";
 
 // Mock user data (in a real app, this would come from an API)
-const MOCK_USERS: User[] = [
+export const MOCK_USERS: User[] = [
   {
     id: 1,
     firstName: 'Admin',

@@ -1,6 +1,7 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User } from '../types';
-import { getUserByPhone } from '../services/userService';
+import { getUserByPhone, MOCK_USERS } from '../services/userService';
 
 interface AuthContextType {
   user: User | null;

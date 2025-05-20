@@ -69,6 +69,7 @@ export default {
 					'cream': '#FFF8DC',
 					'light-cream': '#FFFAF0',
 					'gold': '#DAA520',
+					'orange': '#F26F21'
 				}
 			},
 			borderRadius: {
